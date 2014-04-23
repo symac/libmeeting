@@ -20,6 +20,20 @@ angular.module('libmeetingApp').controller('compteur', function($scope, catsInfo
 		$scope.stats[type] = $scope.stats[type] + 1;
 	};
 
+	$scope.removeUser = function (index)
+	{
+		$scope.stats[$scope.users[index]['type']] = $scope.stats[$scope.users[index]['type']] - 1;
+		$scope.users.splice(index,1); 
+	}
+
+	$scope.razTimer = function()
+	{
+		$scope.users = new Array();
+		$scope.stats.A = 0;
+		$scope.stats.B = 0;
+		$scope.stats.C = 0;
+	}
+
 	$scope.startTimer = function (){
 		if ($scope.timerPause)
 		{

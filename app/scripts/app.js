@@ -22,11 +22,4 @@ angular
         'B' : {price: 2000, color: '#449d44'},
         'C' : {price: 1500, color: '#d58512'}
       };
-  }).filter('range', function() {
-    return function(arr, lower, upper) {
-      for (var i = lower; i <= upper; i++){
-        arr.push(i);
-      }
-      return arr;
-    };
   });

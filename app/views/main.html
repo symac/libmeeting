@@ -5,9 +5,9 @@
 <div ng-controller="compteur">
   <timer id='myTimer' style='display:none' autostart="false" interval="1000">{{hhours}}h {{mminutes}}m {{sseconds}}s</timer>
   <div class="row">
-    <div class='col-sm-4 text-center'><a ng-init="countA = 0" ng-click="addUser('A')" class='btn btn-default btn-primary'><i class='fa fa-user'></i> Catégorie A</a></div>
-    <div class='col-sm-4 text-center'><a ng-init="countB = 0"  ng-click="addUser('B')" class='btn btn-default btn-success'><i class='fa fa-user'></i> Catégorie B</a></div>
-    <div class='col-sm-4 text-center'><a ng-init="countC = 0" ng-click="addUser('C')" class='btn btn-default btn-warning'><i class='fa fa-user'></i> Catégorie C</a></div>
+    <div class='col-sm-4 text-center'><a ng-init="countA = 0" ng-click="addUser('A')" class='btn btn-default btn-primary'><i class='fa fa-plus-circle'></i> 1 catégorie A</a></div>
+    <div class='col-sm-4 text-center'><a ng-init="countB = 0"  ng-click="addUser('B')" class='btn btn-default btn-success'><i class='fa fa-plus-circle'></i> 1 catégorie B</a></div>
+    <div class='col-sm-4 text-center'><a ng-init="countC = 0" ng-click="addUser('C')" class='btn btn-default btn-warning'><i class='fa fa-plus-circle'></i> 1 catégorie C</a></div>
   </div>
   <div class="row">
     <!-- Rappel des participants à la réunion -->
@@ -22,10 +22,19 @@
         <!-- Participants déjà définis : -->
         <div class="panel-body" ng-if="users.length > 0">
           <div ng-repeat="u in users">
-            <i class="fa fa-user fa-4x " style='float:left; color:{{u.color}}'></i>
+            <i class="fa fa-user fa-4x " style='float:left; color:{{u.color}}' ng-click='removeUser($index)'></i>
           </div>
-          <div style='clear:both'>
-            {{stats.A}} personnel(s) de catégorie A, {{stats.B}} personnel(s) de catégorie B et {{stats.C}} personnel(s) de catégorie C.
+
+          <div class="row" style='clear:both; color:white'>
+            <div class="col-sm-4 well well-sm text-center" style='background-color:#3071a9'>
+            <span class='crewCount'>{{stats.A}}</span><br/>catégorie A
+            </div>
+            <div class="col-sm-4 well well-sm text-center" style='background-color:#449d44'>
+            <span class='crewCount'>{{stats.B}}</span><br/>catégorie B
+            </div>
+            <div class="col-sm-4 well well-sm text-center" style='background-color:#d58512'>
+            <span class='crewCount'>{{stats.C}}</span><br/>catégorie C
+            </div>
           </div>  
         </div>
       </div>
@@ -35,9 +44,11 @@
   <div class="text-center" style='padding:10px'>
     <button ng-click="startTimer()" ng-disabled="timerRunning && !timerPause" class="btn btn-danger">C'est parti !</button>
     <button ng-click="pauseTimer()" ng-disabled="timerPause" class="btn btn-default">Pause</button>
+    <button ng-click="razTimer()" class="btn btn-default">Réinitialiser</button>
+
   </div>
-  <div id='summary'>
-    Cette réunion, commencée il y a <span id='meetingDuration'></span> a coûté <span id='meetingCost'></span>.
+  <div id='summary' class="text-center">
+    Déjà <span id='meetingDuration'></span>, cette réunion a coûté <br/><div id='meetingCost'></div>
   </div>
  
 </div>
@@ -46,5 +57,5 @@
 </div>
 
 <div class="footer">
-  <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+  <p>Made with <span class="fa fa-heart"></span> in Bordeaux, France</p>
 </div>
