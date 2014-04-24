@@ -1,9 +1,4 @@
-<div class="header">
-  <h3 class="text-muted">Réunion de bibliothécaires</h3>
-</div>
-
 <div ng-controller="compteur">
-  <timer id='myTimer' style='display:none' autostart="false" interval="1000">{{hhours}}h {{mminutes}}m {{sseconds}}s</timer>
   <div class="row">
     <div class='col-sm-4 text-center'><a ng-init="countA = 0" ng-click="addUser('A')" class='btn btn-default btn-primary'><i class='fa fa-plus-circle'></i> 1 catégorie A</a></div>
     <div class='col-sm-4 text-center'><a ng-init="countB = 0"  ng-click="addUser('B')" class='btn btn-default btn-success'><i class='fa fa-plus-circle'></i> 1 catégorie B</a></div>
@@ -42,20 +37,16 @@
   </div>
   
   <div class="text-center" style='padding:10px'>
-    <button ng-click="startTimer()" ng-disabled="timerRunning && !timerPause" class="btn btn-danger">C'est parti !</button>
-    <button ng-click="pauseTimer()" ng-disabled="timerPause" class="btn btn-default">Pause</button>
-    <button ng-click="razTimer()" class="btn btn-default">Réinitialiser</button>
+    <button ng-click="startTimer()" ng-disabled="timerRunning && !timerPause" class="btn btn-danger"><i class='fa fa-play'></i> C'est parti !</button>
+    <button ng-click="pauseTimer()" ng-disabled="timerPause" class="btn btn-default"><i class='fa fa-pause'></i> Pause</button>
+    <button ng-click="razTimer()" class="btn btn-default"><i class='fa fa-stop'></i> Réinitialiser</button>
 
   </div>
-  <div id='summary' class="text-center">
-    Déjà <span id='meetingDuration'></span>, cette réunion a coûté <br/><div id='meetingCost'></div>
+  <div id='summary' class="text-center" ng-show="timerRunning">
+    Déjà   <timer id='myTimer' autostart="false" interval="1000">{{hhours}}h {{mminutes}}m {{sseconds}}s</timer>, cette réunion a coûté <br/><div id='meetingCost'>{{totalCost}}</div>
   </div>
  
 </div>
     
 
-</div>
-
-<div class="footer">
-  <p>Made with <span class="fa fa-heart"></span> in Bordeaux, France</p>
 </div>

@@ -3,7 +3,6 @@
 
 angular.module('libmeetingApp').controller('compteur', function($scope, catsInfos)
 {
-	$('#summary').hide();
 	$scope.catsInfos = catsInfos;
 	$scope.timerRunning = false;
 	$scope.timerPause = false;
@@ -14,6 +13,9 @@ angular.module('libmeetingApp').controller('compteur', function($scope, catsInfo
 	$scope.stats.B = 0;
 	$scope.stats.C = 0;
 
+	$scope.totalCost = '0.00';
+	$scope.meetingDuration = '';
+
 	$scope.addUser = function (type)
 	{
 		$scope.users.push({type: type, color : catsInfos[type].color});
@@ -22,17 +24,19 @@ angular.module('libmeetingApp').controller('compteur', function($scope, catsInfo
 
 	$scope.removeUser = function (index)
 	{
-		$scope.stats[$scope.users[index]['type']] = $scope.stats[$scope.users[index]['type']] - 1;
-		$scope.users.splice(index,1); 
-	}
+		$scope.stats[$scope.users[index].type] = $scope.stats[$scope.users[index].type] - 1;
+		$scope.users.splice(index, 1);
+	};
 
 	$scope.razTimer = function()
 	{
-		$scope.users = new Array();
+		$scope.users = [];
 		$scope.stats.A = 0;
 		$scope.stats.B = 0;
 		$scope.stats.C = 0;
-	}
+		$scope.$broadcast('timer-stop');
+		$scope.timerRunning = false;
+	};
 
 	$scope.startTimer = function (){
 		if ($scope.timerPause)
@@ -57,19 +61,24 @@ angular.module('libmeetingApp').controller('compteur', function($scope, catsInfo
 		{
 			return;
 		}
+
 		// Ici on a le compteur en millisecondes
 		var cost = $scope.stats.A * (((args.millis / 1000) * $scope.catsInfos.A.price) / 547200);
 		cost += $scope.stats.B * (((args.millis / 1000) * $scope.catsInfos.B.price) / 547200);
 		cost += $scope.stats.C * (((args.millis / 1000) * $scope.catsInfos.C.price) / 547200);
 		
-		$scope.totalCost = cost;
-		if (cost !== 0)
+		// Solution trouvée sur http://stackoverflow.com/a/18634375 pour éviter un warning au premier appel
+		if ($scope.$root.$$phase !== '$apply' && $scope.$root.$$phase !== '$digest') {
+			$scope.$apply(function() {
+				$scope.totalCost = cost.toFixed(2) + ' €';
+			});
+		}
+		else
 		{
-			$('#summary').show();
+			$scope.totalCost = cost.toFixed(2) + ' €';
 		}
 
-		$('#meetingCost').html(cost.toFixed(2) + ' €');
-		$('#meetingDuration').html($('#myTimer').html());
+//		$('#meetingDuration').html($('#myTimer').html());
 	});
 }
 );

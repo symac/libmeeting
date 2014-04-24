@@ -2,9 +2,6 @@
 
 angular
   .module('libmeetingApp', [
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
     'ngRoute',
     'timer'
   ])
@@ -12,6 +9,9 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html'
+      })
+      .when('/about', {
+        templateUrl: 'views/about.html'
       })
       .otherwise({
         redirectTo: '/'
